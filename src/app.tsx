@@ -1,15 +1,17 @@
 import { Plus, SearchMd, X } from "@untitled-ui/icons-react";
 import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import React from "react";
+import Footer from "./components/footer";
 import { StationItem } from "./components/station-item";
+import { useLanguage } from "./hooks/use-language";
 import { useMeasure } from "./hooks/use-measure";
 import { usePersistedState } from "./hooks/use-persisted-state";
 import { useStations } from "./hooks/use-stations";
 import { cn, createKey } from "./utils";
-import Footer from "./components/footer";
 
 export function App() {
   const [state, setState] = React.useState<"VIEW" | "SEARCH" | "ADD">("VIEW");
+
   const [ref, height] = useMeasure<HTMLDivElement>();
 
   const [addSearch, setAddSearch] = React.useState("");
@@ -27,6 +29,7 @@ export function App() {
   ]);
 
   const { data: stations } = useStations();
+  const { t } = useLanguage();
 
   /*   useOnClickOutside(ref, () => {
     if (state !== "ADD") {
@@ -75,7 +78,7 @@ export function App() {
                             <SearchMd className="size-5" />
                           </span>
                           <input
-                            placeholder="Cari stasiun"
+                            placeholder={t("Cari stasiun")}
                             autoFocus
                             onChange={(e) => setViewSearch(e.target.value)}
                             className="text-md w-full bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-transparent"
@@ -220,7 +223,7 @@ export function App() {
                           <SearchMd className="size-5" />
                         </span>
                         <input
-                          placeholder="Cari stasiun"
+                          placeholder={t("Cari stasiun")}
                           autoFocus
                           onChange={(e) => setAddSearch(e.target.value)}
                           value={addSearch}
@@ -275,7 +278,9 @@ export function App() {
                   return (
                     <div className="flex flex-col items-center justify-center gap-1 py-10 text-center">
                       <span className="text-md opacity-50">
-                        Stasiun {addSearch} tidak dapat ditemukan
+                        {t("Stasiun {{addSearch}} tidak dapat ditemukan", {
+                          addSearch,
+                        })}
                       </span>
                     </div>
                   );
@@ -370,10 +375,10 @@ export function App() {
                   return (
                     <div className="flex flex-col items-center justify-center gap-1 py-10 text-center">
                       <h1 className="text-md opacity-80">
-                        Stasiun belum ditambahkan
+                        {t("Stasiun belum ditambahkan")}
                       </h1>
                       <span className="text-sm opacity-50">
-                        Tambahkan stasiun dengan menekan tombol +
+                        {t("Tambahkan stasiun dengan menekan tombol")} +
                       </span>
                     </div>
                   );
