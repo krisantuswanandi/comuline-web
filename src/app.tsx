@@ -1,22 +1,19 @@
-import { useTranslation } from "react-i18next";
-import * as Switch from "@radix-ui/react-switch";
 import { Plus, SearchMd, X } from "@untitled-ui/icons-react";
 import { AnimatePresence, motion, MotionConfig } from "motion/react";
 import { useState } from "react";
-import { setDefaultOptions } from "date-fns";
-import { id, enUS } from "date-fns/locale";
+import Footer from "./components/footer";
 import { StationItem } from "./components/station-item";
+import { useLanguage } from "./hooks/use-language";
 import { useMeasure } from "./hooks/use-measure";
 import { usePersistedState } from "./hooks/use-persisted-state";
 import { useStations } from "./hooks/use-stations";
 import { cn, createKey } from "./utils";
-import Footer from "./components/footer";
 
 import "./libs/i18n/config";
 
 export function App() {
   const [state, setState] = useState<"VIEW" | "SEARCH" | "ADD">("VIEW");
-  const [isSwitchActive, setIsSwitchActive] = useState(false);
+
   const [ref, height] = useMeasure<HTMLDivElement>();
 
   const [addSearch, setAddSearch] = useState("");
@@ -34,15 +31,7 @@ export function App() {
   ]);
 
   const { data: stations } = useStations();
-  const { t, i18n } = useTranslation();
-
-  const onSwitchLanguange = (val: boolean) => {
-    setIsSwitchActive(val);
-    i18n.changeLanguage(val ? "en" : "id");
-  };
-
-  // added global locale format for date-fns
-  setDefaultOptions({ locale: isSwitchActive ? enUS : id });
+  const { t } = useLanguage();
 
   /*   useOnClickOutside(ref, () => {
     if (state !== "ADD") {
@@ -197,22 +186,6 @@ export function App() {
                       )}
                     />
                   </motion.button>
-                  <div className="flex items-center">
-                    <label className="text-sm" htmlFor="languange-switcher">
-                      ID
-                    </label>
-                    <Switch.Root
-                      id="languange-switcher"
-                      className="relative mx-1 h-[24px] w-[42px] cursor-pointer rounded-full bg-gray-200 outline-none data-[state=checked]:bg-blue-600"
-                      checked={isSwitchActive}
-                      onCheckedChange={onSwitchLanguange}
-                    >
-                      <Switch.Thumb className="block size-[21px] translate-x-0.5 rounded-full bg-white transition-transform duration-100 will-change-transform data-[state=checked]:translate-x-[19px]" />
-                    </Switch.Root>
-                    <label className="text-sm" htmlFor="languange-switcher">
-                      EN
-                    </label>
-                  </div>
                 </div>
                 {state === "ADD" ? (
                   <motion.div

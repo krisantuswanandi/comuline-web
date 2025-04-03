@@ -1,8 +1,9 @@
+import { useLanguage } from "@/hooks/use-language";
+import { cn } from "@/utils";
 import { Mail01 } from "@untitled-ui/icons-react";
-import { useTranslation } from "react-i18next";
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const { t, language, switchLanguage } = useLanguage();
 
   return (
     <div className="flex w-full flex-col gap-[25px] py-10 text-center text-sm">
@@ -11,6 +12,32 @@ const Footer = () => {
           "Dibuat sebagai bentuk keyakinan bahwa data transportasi umum seharusnya dapat diakses oleh semua orang.",
         )}
       </p>
+
+      <div className="mx-auto flex items-center gap-[10px]">
+        <button
+          type="button"
+          disabled={language === "id"}
+          onClick={() => switchLanguage(language === "id" ? "en" : "id")}
+          className={cn("opacity-50 transition hover:opacity-100", {
+            "opacity-100": language === "id",
+            underline: language !== "id",
+          })}
+        >
+          Bahasa Indonesia
+        </button>
+        <p className="opacity-30">⋅</p>
+        <button
+          type="button"
+          disabled={language === "en"}
+          onClick={() => switchLanguage(language === "id" ? "en" : "id")}
+          className={cn("opacity-50 transition hover:opacity-100", {
+            "opacity-100": language === "en",
+            underline: language !== "en",
+          })}
+        >
+          English
+        </button>
+      </div>
 
       <div className="mx-auto flex items-center gap-5">
         <a
