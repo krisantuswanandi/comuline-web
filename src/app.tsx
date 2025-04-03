@@ -9,8 +9,6 @@ import { usePersistedState } from "./hooks/use-persisted-state";
 import { useStations } from "./hooks/use-stations";
 import { cn, createKey } from "./utils";
 
-import "./libs/i18n/config";
-
 export function App() {
   const [state, setState] = React.useState<"VIEW" | "SEARCH" | "ADD">("VIEW");
 

@@ -2,6 +2,7 @@ import { setDefaultOptions } from "date-fns";
 import { enUS, id } from "date-fns/locale";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import "../libs/i18n/config";
 
 export type Language = "en" | "id";
 
