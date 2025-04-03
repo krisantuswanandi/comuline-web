@@ -1,6 +1,6 @@
 import { Plus, SearchMd, X } from "@untitled-ui/icons-react";
 import { AnimatePresence, motion, MotionConfig } from "motion/react";
-import { useState } from "react";
+import React from "react";
 import Footer from "./components/footer";
 import { StationItem } from "./components/station-item";
 import { useLanguage } from "./hooks/use-language";
@@ -12,12 +12,12 @@ import { cn, createKey } from "./utils";
 import "./libs/i18n/config";
 
 export function App() {
-  const [state, setState] = useState<"VIEW" | "SEARCH" | "ADD">("VIEW");
+  const [state, setState] = React.useState<"VIEW" | "SEARCH" | "ADD">("VIEW");
 
   const [ref, height] = useMeasure<HTMLDivElement>();
 
-  const [addSearch, setAddSearch] = useState("");
-  const [viewSearch, setViewSearch] = useState("");
+  const [addSearch, setAddSearch] = React.useState("");
+  const [viewSearch, setViewSearch] = React.useState("");
 
   const [savedStations, setSavedStations] = usePersistedState<
     {
